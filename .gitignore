@@ -1,0 +1,12 @@
+# Compiled class files
+*.class
+
+# Generated PPM output (rendered images, not source)
+*.ppm
+
+# javadoc output
+/html/
+
+# jar files built from framebuffer sources
+framebuffer.jar
+framebuffer-sources.jar
