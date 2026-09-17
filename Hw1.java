@@ -120,7 +120,36 @@ public class Hw1
       }
 
       
+      final int width = fbEmbedded.getWidthFB();
+      final int height = fbEmbedded.getHeightFB();
 
+      final FrameBuffer.Viewport flipViewport = fb.new Viewport(70, 120, width, height);
+      for (int y = 0; y < height; ++y){
+
+         for (int x = 0; x < width; ++x)
+         {
+            final Color pixelColor = fbEmbedded.getPixelFB(x, y);
+            transparentVP(flipViewport, x, height - 1 - y, pixelColor); //vertical flip
+         }
+      }
+
+      final FrameBuffer.Viewport troopVP = fb.new Viewport(340, 140, width, height); 
+      transparentVP(troopVP, 340, 140, Color.WHITE); 
+      
+      
+
+
+
+      
+
+
+
+
+
+
+
+         
+      
 
 
 
@@ -129,5 +158,30 @@ public class Hw1
       final String savedFileName = "Hw1.ppm";
       fb.dumpFB2File( savedFileName );
       System.err.println("Saved " + savedFileName);
+   }
+
+
+   /**
+      Set the pixel at ({@code x}, {@code y}) in {@code vp} to {@code pixelColor},
+      unless {@code pixelColor} is near-white, in which case the pixel is left
+      alone so whatever is already in the {@code Viewport} shows through.
+
+      @param vp          {@code Viewport} to draw into
+      @param x           horizontal coordinate within {@code vp}
+      @param y           vertical coordinate within {@code vp}
+      @param pixelColor  candidate {@link Color} to draw
+   */
+   private static void transparentVP(final FrameBuffer.Viewport vp,
+                                     final int x, final int y,
+                                     final Color pixelColor)
+   {
+      final int whiteThreshold = 250; // R,G,B all >= this counts as "background white"
+      final boolean isNearWhite = pixelColor.getRed()   >= whiteThreshold
+                                && pixelColor.getGreen() >= whiteThreshold
+                                && pixelColor.getBlue()  >= whiteThreshold;
+      if (!isNearWhite) // skip near-white pixels so the background shows through
+      {
+         vp.setPixelVP(x, y, pixelColor);
+      }
    }
 }

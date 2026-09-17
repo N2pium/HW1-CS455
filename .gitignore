@@ -10,3 +10,8 @@
 # jar files built from framebuffer sources
 framebuffer.jar
 framebuffer-sources.jar
+
+# unrelated local scaffold project sharing this folder
+/.vscode/
+/src/
+/out/
